@@ -14,7 +14,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -29,23 +29,37 @@ const Header = () => {
     <>
       <header 
         className={cn(
-          "fixed top-2 left-2 right-2 z-50 backdrop-blur-xl rounded-xl transition-all duration-200 border border-white/10",
-          scrolled ? "shadow-card" : "shadow-sm"
+          "fixed top-2 left-2 right-2 z-50 backdrop-blur-xl rounded-xl transition-all duration-500 ease-out border",
+          scrolled 
+            ? "shadow-2xl border-white/20 scale-[0.99]" 
+            : "shadow-sm border-white/10"
         )}
-        style={{ backgroundColor: 'rgba(42, 61, 58, 0.95)' }}
+        style={{ 
+          backgroundColor: scrolled ? 'rgba(42, 61, 58, 0.98)' : 'rgba(42, 61, 58, 0.95)',
+          transition: 'background-color 0.5s ease-out, transform 0.5s ease-out'
+        }}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 md:h-28">
-          <Link to="/" className="flex items-center flex-shrink-0">
+          <div className={cn(
+            "flex items-center justify-between transition-all duration-500 ease-out",
+            scrolled ? "h-16 md:h-20" : "h-20 md:h-28"
+          )}>
+          <Link to="/" className="flex items-center flex-shrink-0 group">
             <img 
               src={hbLogoWhite} 
               alt="Healing Buds Logo" 
-              className="h-12 w-auto object-contain sm:h-16 md:h-20"
+              className={cn(
+                "w-auto object-contain transition-all duration-500 ease-out group-hover:scale-105",
+                scrolled ? "h-10 sm:h-12 md:h-16" : "h-12 sm:h-16 md:h-20"
+              )}
             />
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className={cn(
+            "hidden md:flex items-center transition-all duration-500 ease-out",
+            scrolled ? "space-x-4" : "space-x-6"
+          )}>
             <div 
               className="relative"
               onMouseEnter={() => setWhatWeDoOpen(true)}
@@ -53,7 +67,8 @@ const Header = () => {
             >
                 <button 
                 className={cn(
-                  "font-body flex items-center gap-1 font-medium text-sm transition-all duration-150 relative px-3 py-1.5 rounded-md",
+                  "font-body flex items-center gap-1 font-medium transition-all duration-300 ease-out relative rounded-md hover:scale-105",
+                  scrolled ? "text-sm px-2.5 py-1.5" : "text-sm px-3 py-1.5",
                   isWhatWeDoActive
                     ? "text-white bg-white/10" 
                     : "text-white/70 hover:text-white hover:bg-white/5"
@@ -115,7 +130,8 @@ const Header = () => {
             <Link 
               to="/research" 
               className={cn(
-                "font-body font-medium text-sm transition-all duration-150 px-3 py-1.5 rounded-md",
+                "font-body font-medium transition-all duration-300 ease-out rounded-md hover:scale-105",
+                scrolled ? "text-sm px-2.5 py-1.5" : "text-sm px-3 py-1.5",
                 isActive("/research") 
                   ? "text-white bg-white/10" 
                   : "text-white/70 hover:text-white hover:bg-white/5"
@@ -126,7 +142,8 @@ const Header = () => {
             <Link 
               to="/about-us" 
               className={cn(
-                "font-body flex items-center gap-1 font-medium text-sm transition-all duration-150 px-3 py-1.5 rounded-md",
+                "font-body flex items-center gap-1 font-medium transition-all duration-300 ease-out rounded-md hover:scale-105",
+                scrolled ? "text-sm px-2.5 py-1.5" : "text-sm px-3 py-1.5",
                 isActive("/about-us") 
                   ? "text-white bg-white/10" 
                   : "text-white/70 hover:text-white hover:bg-white/5"
@@ -138,7 +155,8 @@ const Header = () => {
             <Link 
               to="/contact" 
               className={cn(
-                "font-body font-medium text-sm transition-all duration-150 px-3 py-1.5 rounded-md",
+                "font-body font-medium transition-all duration-300 ease-out rounded-md hover:scale-105",
+                scrolled ? "text-sm px-2.5 py-1.5" : "text-sm px-3 py-1.5",
                 isActive("/contact") 
                   ? "text-white bg-white/10" 
                   : "text-white/70 hover:text-white hover:bg-white/5"
@@ -148,10 +166,16 @@ const Header = () => {
             </Link>
 
             {/* Desktop Action Buttons */}
-            <div className="flex items-center gap-3 ml-4 pl-4 border-l border-white/20">
+            <div className={cn(
+              "flex items-center border-l border-white/20 transition-all duration-500 ease-out",
+              scrolled ? "gap-2 ml-3 pl-3" : "gap-3 ml-4 pl-4"
+            )}>
               <button 
                 onClick={() => setEligibilityDialogOpen(true)}
-                className="font-body font-normal text-sm text-white px-5 py-2 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                className={cn(
+                  "font-body font-normal text-white rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg",
+                  scrolled ? "text-xs px-4 py-1.5" : "text-sm px-5 py-2"
+                )}
                 style={{ 
                   backgroundColor: 'rgba(77, 191, 161, 0.25)',
                 }}
@@ -167,7 +191,10 @@ const Header = () => {
                 Check Eligibility
               </button>
               <button 
-                className="font-body font-normal text-sm text-white px-5 py-2 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                className={cn(
+                  "font-body font-normal text-white rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg",
+                  scrolled ? "text-xs px-4 py-1.5" : "text-sm px-5 py-2"
+                )}
                 style={{ 
                   backgroundColor: 'rgba(77, 191, 161, 0.25)',
                 }}
@@ -190,11 +217,18 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white p-2"
+            className={cn(
+              "md:hidden text-white p-2 transition-all duration-300 hover:scale-110 active:scale-95",
+              scrolled && "p-1.5"
+            )}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? (
+              <X className={cn("transition-all duration-300", scrolled ? "w-5 h-5" : "w-6 h-6")} />
+            ) : (
+              <Menu className={cn("transition-all duration-300", scrolled ? "w-5 h-5" : "w-6 h-6")} />
+            )}
           </button>
         </div>
 
