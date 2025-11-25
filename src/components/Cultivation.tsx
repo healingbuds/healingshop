@@ -1,6 +1,6 @@
 import ScrollAnimation from "@/components/ScrollAnimation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import cultivationImage from "@/assets/indoor-grow-hq.jpg";
+import cultivationImage from "@/assets/cultivation-facility-bright.jpg";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
@@ -26,18 +26,18 @@ const Cultivation = () => {
             alt="Indoor cannabis cultivation facility with advanced lighting" 
             className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 to-foreground/45 transition-opacity duration-500 group-hover:from-foreground/80 group-hover:to-foreground/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent" />
           
           <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-8 md:px-16">
-            <h2 className="font-pharma text-3xl sm:text-4xl md:text-5xl font-semibold text-background mb-4 sm:mb-6 max-w-2xl drop-shadow-lg tracking-tight">
+            <h2 className="font-pharma text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground mb-4 sm:mb-6 max-w-2xl drop-shadow-sm tracking-tight">
               Production & Processing Excellence
             </h2>
-            <p className="font-body text-background/95 text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mb-6 sm:mb-8 drop-shadow-md">
+            <p className="font-body text-foreground/90 text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mb-6 sm:mb-8 drop-shadow-sm">
               Our state-of-the-art facilities across Canada and Portugal span more than 30,000 square meters dedicated to pharmaceutical-grade cannabis production. From seed selection through harvesting and processing, we maintain rigorous oversight at every production stage. Each batch undergoes comprehensive testing, precise trimming, controlled drying and curing, and careful packaging to ensure consistent quality that meets stringent third-party standards.
             </p>
             <Link 
               to="/what-we-do" 
-              className="font-body text-secondary hover:text-secondary/90 font-semibold text-base sm:text-lg transition-all inline-flex items-center gap-2 group/link"
+              className="font-body text-primary hover:text-primary/80 font-semibold text-base sm:text-lg transition-all inline-flex items-center gap-2 group/link"
             >
               Discover our production standards 
               <span className="transition-transform group-hover/link:translate-x-1">→</span>
@@ -46,10 +46,10 @@ const Cultivation = () => {
 
           {/* Navigation arrows - hidden on mobile */}
           <div className="hidden sm:flex absolute bottom-8 right-8 gap-3">
-            <button className="w-12 h-12 rounded-full border-2 border-background/50 hover:border-background hover:bg-background/10 flex items-center justify-center text-background transition-all backdrop-blur-sm">
+            <button className="w-12 h-12 rounded-full border-2 border-primary/30 hover:border-primary hover:bg-primary/10 flex items-center justify-center text-primary transition-all backdrop-blur-sm">
               <ChevronLeft className="w-6 h-6" />
             </button>
-            <button className="w-12 h-12 rounded-full border-2 border-background/50 hover:border-background hover:bg-background/10 flex items-center justify-center text-background transition-all backdrop-blur-sm">
+            <button className="w-12 h-12 rounded-full border-2 border-primary/30 hover:border-primary hover:bg-primary/10 flex items-center justify-center text-primary transition-all backdrop-blur-sm">
               <ChevronRight className="w-6 h-6" />
             </button>
           </div>
