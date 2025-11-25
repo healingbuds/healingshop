@@ -31,8 +31,8 @@ const Index = () => {
         <Header />
         {/* Dynamic scroll-based fade overlay from hero bottom */}
         <div 
-          className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background/80 via-background/40 to-transparent z-40 pointer-events-none transition-opacity duration-500 ease-out"
-          style={{ opacity: scrollFade * 0.7 }}
+          className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background/30 via-background/15 to-transparent z-40 pointer-events-none transition-opacity duration-500 ease-out"
+          style={{ opacity: scrollFade * 0.4 }}
         />
         <main>
           <Hero />
