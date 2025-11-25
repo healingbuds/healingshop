@@ -17,14 +17,14 @@ const newsItems = [
   {
     category: "Product Innovation",
     title: "New Advanced Delivery System Launches in Australian Market Through Strategic Partnership",
-    description: "",
+    description: "Our innovative inhalation technology brings precise dosing and improved patient outcomes to medical cannabis treatment in one of the world's most regulated markets...",
     image: newsInhaler,
     featured: false,
   },
   {
     category: "Industry Insights",
     title: "Key Takeaways from International Medical Cannabis Conference: Building Trust and Advancing Standards",
-    description: "",
+    description: "Industry leaders gathered to discuss regulatory frameworks, clinical evidence, and quality standards that will shape the future of medical cannabis across global markets...",
     image: newsConference,
     featured: false,
   },
