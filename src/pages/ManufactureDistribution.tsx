@@ -3,13 +3,13 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import ScrollAnimation from "@/components/ScrollAnimation";
 import BackToTop from "@/components/BackToTop";
-import { useState, useRef } from "react";
+import International from "@/components/International";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import productionFacility from "@/assets/production-facility-hq.jpg";
 import { Factory, Globe, Award, Package } from "lucide-react";
 
 const ManufactureDistribution = () => {
-  const [activeRegion, setActiveRegion] = useState<"brazil" | "canada" | "australasia">("brazil");
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -144,57 +144,7 @@ const ManufactureDistribution = () => {
           </section>
 
           {/* International Presence Section */}
-          <section className="py-20 md:py-32 bg-background">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <ScrollAnimation>
-                <h2 className="text-4xl font-semibold text-foreground mb-4">
-                  We are international
-                </h2>
-                <p className="text-lg text-muted-foreground/80 max-w-3xl mb-12">
-                  Our ecosystem of cultivators, manufacturers, and distributors spans four continents, establishing us as a global cannabinoid supplier with unmatched reach.
-                </p>
-              </ScrollAnimation>
-
-              {/* Region Tabs */}
-              <div className="flex flex-wrap justify-center gap-3 mb-12">
-                <button
-                  onClick={() => setActiveRegion("brazil")}
-                  className={`px-6 py-2.5 rounded-lg font-medium transition-all duration-200 ${
-                    activeRegion === "brazil"
-                      ? "bg-primary text-white shadow-md"
-                      : "bg-muted/50 text-muted-foreground hover:bg-muted hover-border"
-                  }`}
-                >
-                  South Africa
-                </button>
-                <button
-                  onClick={() => setActiveRegion("canada")}
-                  className={`px-6 py-2.5 rounded-lg font-medium transition-all duration-200 ${
-                    activeRegion === "canada"
-                      ? "bg-primary text-white shadow-md"
-                      : "bg-muted/50 text-muted-foreground hover:bg-muted hover-border"
-                  }`}
-                >
-                  United Kingdom
-                </button>
-                <button
-                  onClick={() => setActiveRegion("australasia")}
-                  className={`px-6 py-2.5 rounded-lg font-medium transition-all duration-200 ${
-                    activeRegion === "australasia"
-                      ? "bg-primary text-white shadow-md"
-                      : "bg-muted/50 text-muted-foreground hover:bg-muted hover-border"
-                  }`}
-                >
-                  Thailand & Portugal
-                </button>
-              </div>
-
-              {/* Map Placeholder */}
-              <div className="card-linear h-[400px] flex items-center justify-center mb-8">
-                <p className="text-muted-foreground text-lg">Interactive Map Visualization</p>
-              </div>
-            </div>
-          </section>
+          <International />
 
           {/* Extraction Section */}
           <section className="py-20 md:py-32 bg-muted/30">
