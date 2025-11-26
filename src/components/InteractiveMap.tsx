@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { Button } from './ui/button';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, ChevronDown } from 'lucide-react';
 
 type LocationType = 'operations-sales' | 'export-only' | 'operations-only';
 
@@ -145,6 +145,7 @@ const InteractiveMap = ({ selectedCountry, onCountrySelect }: InteractiveMapProp
   const markers = useRef<maplibregl.Marker[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeLayer, setActiveLayer] = useState<LayerFilter>('all');
+  const [isCardExpanded, setIsCardExpanded] = useState(false);
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -420,8 +421,11 @@ const InteractiveMap = ({ selectedCountry, onCountrySelect }: InteractiveMapProp
     <div className="relative w-full h-full">
       {/* Compliance Disclaimer Banner - Positioned Below Zoom Controls */}
       <div className="absolute top-28 right-4 sm:right-6 z-20 max-w-xs hidden sm:block">
-        {/* Glass card with enhanced glossy effect */}
-        <div className="relative bg-gradient-to-br from-white/30 via-white/20 to-white/10 dark:from-white/20 dark:via-white/10 dark:to-white/5 backdrop-blur-2xl rounded-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37),0_2px_8px_0_rgba(0,0,0,0.1)] border border-white/50 dark:border-white/30 p-4 overflow-hidden">
+        {/* Glass card with enhanced glossy effect and pulsing glow */}
+        <div 
+          className="relative bg-gradient-to-br from-white/30 via-white/20 to-white/10 dark:from-white/20 dark:via-white/10 dark:to-white/5 backdrop-blur-2xl rounded-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37),0_2px_8px_0_rgba(0,0,0,0.1)] border border-white/50 dark:border-white/30 p-4 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.5),0_2px_8px_0_rgba(0,0,0,0.2)] animate-pulse-glow"
+          onClick={() => setIsCardExpanded(!isCardExpanded)}
+        >
           {/* Top glossy highlight */}
           <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/10 to-transparent pointer-events-none rounded-2xl" />
           
@@ -429,13 +433,60 @@ const InteractiveMap = ({ selectedCountry, onCountrySelect }: InteractiveMapProp
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent pointer-events-none rounded-2xl opacity-60" style={{ transform: 'translateX(-100%)', animation: 'shimmer 3s infinite' }} />
           
           {/* Content */}
-          <div className="relative z-10 flex items-start gap-3">
-            <Sparkles className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5 drop-shadow-[0_0_8px_rgba(20,184,166,0.6)]" />
-            <div>
-              <div className="text-xs font-bold text-white mb-1.5 drop-shadow-md">Licensed Partner Network</div>
-              <p className="text-[10px] text-white/90 leading-relaxed drop-shadow-md">
-                All facilities operate under licensed partners with full regulatory compliance. Digital Key holders earn blockchain-verified rewards without handling cannabis products.
-              </p>
+          <div className="relative z-10">
+            <div className="flex items-start gap-3">
+              <Sparkles className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5 drop-shadow-[0_0_8px_rgba(20,184,166,0.6)] animate-pulse" />
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="text-xs font-bold text-white drop-shadow-md">Licensed Partner Network</div>
+                  <ChevronDown 
+                    className={`w-4 h-4 text-white/80 transition-transform duration-300 ${isCardExpanded ? 'rotate-180' : ''}`}
+                  />
+                </div>
+                <p className="text-[10px] text-white/90 leading-relaxed drop-shadow-md">
+                  All facilities operate under licensed partners with full regulatory compliance. Digital Key holders earn blockchain-verified rewards without handling cannabis products.
+                </p>
+              </div>
+            </div>
+            
+            {/* Expanded content */}
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isCardExpanded ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+              <div className="pt-4 border-t border-white/30 space-y-3">
+                <div>
+                  <div className="text-[10px] font-bold text-white/80 mb-1.5 uppercase tracking-wide drop-shadow-md">Key Features</div>
+                  <ul className="space-y-1.5 text-[10px] text-white/90 drop-shadow-md">
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-400 mt-0.5">•</span>
+                      <span>Blockchain-verified seed-to-sale traceability</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-400 mt-0.5">•</span>
+                      <span>Licensed partners in multiple regulated markets</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-400 mt-0.5">•</span>
+                      <span>GMP & EU-GMP certified facilities</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-teal-400 mt-0.5">•</span>
+                      <span>Full regulatory compliance in all jurisdictions</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <div className="text-[10px] font-bold text-white/80 mb-1.5 uppercase tracking-wide drop-shadow-md">Active Regions</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="px-2 py-1 bg-white/20 text-white text-[9px] rounded-md font-semibold backdrop-blur-sm border border-white/30">South Africa</span>
+                    <span className="px-2 py-1 bg-white/20 text-white text-[9px] rounded-md font-semibold backdrop-blur-sm border border-white/30">Portugal</span>
+                    <span className="px-2 py-1 bg-white/20 text-white text-[9px] rounded-md font-semibold backdrop-blur-sm border border-white/30">UK (Coming)</span>
+                  </div>
+                </div>
+                
+                <div className="pt-2 text-[9px] text-white/70 italic leading-relaxed drop-shadow-md">
+                  Digital Key NFT holders participate in revenue-sharing without direct product handling. All operations maintained by fully licensed entities.
+                </div>
+              </div>
             </div>
           </div>
         </div>
