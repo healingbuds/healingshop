@@ -1,5 +1,6 @@
 import React from "react";
 import hbLogoSquare from "@/assets/hb-logo-square.png";
+import heroVideoBg from "@/assets/hero-video-bg.jpg";
 import { ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -47,6 +48,7 @@ const Hero = () => {
           muted 
           loop 
           playsInline
+          poster={heroVideoBg}
           className="w-full h-full object-cover"
         >
           <source src="/hero-video.mp4" type="video/mp4" />
