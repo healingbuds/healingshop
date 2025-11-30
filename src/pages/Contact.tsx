@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import ScrollAnimation from "@/components/ScrollAnimation";
 import BackToTop from "@/components/BackToTop";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail } from "lucide-react";
 import greenhouseImage from "@/assets/greenhouse-rows.png";
 
 const Contact = () => {
@@ -59,36 +59,13 @@ const Contact = () => {
                   {t('connect.subtitle')}
                 </p>
                 
-                <div className="space-y-8">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2 tracking-tight">{t('connect.email')}</h3>
-                      <p className="text-muted-foreground/80 text-sm">info@healingbuds.com</p>
-                    </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-6 h-6 text-white" />
                   </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2 tracking-tight">{t('connect.phone')}</h3>
-                      <p className="text-muted-foreground/80 text-sm">+1 (555) 123-4567</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-white" />
-                    </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2 tracking-tight">{t('connect.location')}</h3>
-                    <p className="text-muted-foreground/80 text-sm mb-1">Avenida D. João II, 98 A</p>
-                    <p className="text-muted-foreground/80 text-sm mb-1">1990-100 Lisboa, Portugal</p>
-                  </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2 tracking-tight">{t('connect.email')}</h3>
+                    <p className="text-muted-foreground/80 text-sm">info@healingbuds.com</p>
                   </div>
                 </div>
                 </div>
