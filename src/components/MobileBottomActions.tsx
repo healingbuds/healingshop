@@ -49,14 +49,14 @@ const MobileBottomActions = () => {
           <div className="flex gap-3">
             <button 
               onClick={() => setEligibilityDialogOpen(true)}
-              className="flex-1 font-body font-semibold px-6 py-3.5 rounded-full transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl bg-gradient-to-r from-primary to-primary/90 text-white border border-primary/20 hover:from-primary/90 hover:to-primary"
+              className="flex-1 font-body font-semibold px-6 py-3.5 rounded-full transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl backdrop-blur-2xl bg-gradient-to-br from-white/30 via-white/20 to-white/10 dark:from-white/20 dark:via-white/10 dark:to-white/5 border border-white/40 hover:border-white/60 text-white hover:bg-white/30"
             >
               Check Eligibility
             </button>
             {user ? (
               <button 
                 onClick={handleLogout}
-                className="flex-1 font-body font-semibold px-6 py-3.5 rounded-full transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl bg-foreground/90 text-background border border-foreground/20 hover:bg-foreground flex items-center justify-center gap-2"
+                className="flex-1 font-body font-semibold px-6 py-3.5 rounded-full transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl backdrop-blur-2xl bg-gradient-to-br from-white/20 via-white/15 to-white/10 dark:from-white/15 dark:via-white/10 dark:to-white/5 border border-white/30 hover:border-white/50 text-white hover:bg-white/25 flex items-center justify-center gap-2"
               >
                 <LogOut className="w-4 h-4" />
                 Sign Out
@@ -64,7 +64,7 @@ const MobileBottomActions = () => {
             ) : (
               <Link 
                 to="/auth"
-                className="flex-1 font-body font-semibold px-6 py-3.5 rounded-full transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl bg-foreground/90 text-background border border-foreground/20 hover:bg-foreground text-center"
+                className="flex-1 font-body font-semibold px-6 py-3.5 rounded-full transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl backdrop-blur-2xl bg-gradient-to-br from-white/20 via-white/15 to-white/10 dark:from-white/15 dark:via-white/10 dark:to-white/5 border border-white/30 hover:border-white/50 text-white hover:bg-white/25 text-center"
               >
                 Patient Login
               </Link>
