@@ -7,12 +7,14 @@ import BackToTop from "@/components/BackToTop";
 import MobileBottomActions from "@/components/MobileBottomActions";
 import { Plus } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import cultivationImage from "@/assets/hero-cannabis.jpg";
-import greenhouseRows from "@/assets/greenhouse-rows.png";
-import productionImage from "@/assets/production.jpg";
-import indoorCultivation from "@/assets/indoor-cultivation.png";
-import productionFacility from "@/assets/production-facility-hq.jpg";
-import researchLab from "@/assets/research-lab-hq.jpg";
+import cultivationImage from "@/assets/cannabis-cultivation-hands.jpg";
+import greenhouseRows from "@/assets/greenhouse-exterior-path.jpg";
+import productionImage from "@/assets/water-irrigation-system.jpg";
+import indoorCultivation from "@/assets/indoor-grow-facility.jpg";
+import productionFacility from "@/assets/greenhouse-interior-infrastructure.jpg";
+import researchLab from "@/assets/cannabis-jars-production.jpg";
+import cannabisLineart1 from "@/assets/cannabis-lineart-1.png";
+import cannabisLineart2 from "@/assets/cannabis-lineart-2.png";
 import { Badge } from "@/components/ui/badge";
 
 const CultivatingProcessing = () => {
@@ -92,7 +94,26 @@ const CultivatingProcessing = () => {
           </section>
 
           {/* Why Partner With Us Section - Linear style */}
-          <section className="py-20 md:py-32" style={{ backgroundColor: 'hsl(var(--section-color))' }}>
+          <section className="py-20 md:py-32 relative overflow-hidden" style={{ backgroundColor: 'hsl(var(--section-color))' }}>
+            {/* Subtle line art decorations */}
+            <motion.img 
+              src={cannabisLineart1} 
+              alt="" 
+              className="absolute -top-10 -left-10 w-48 md:w-64 h-auto opacity-[0.04] pointer-events-none"
+              initial={{ opacity: 0, rotate: -10 }}
+              whileInView={{ opacity: 0.04, rotate: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2 }}
+            />
+            <motion.img 
+              src={cannabisLineart2} 
+              alt="" 
+              className="absolute -bottom-10 -right-10 w-48 md:w-64 h-auto opacity-[0.04] pointer-events-none rotate-180"
+              initial={{ opacity: 0, rotate: 190 }}
+              whileInView={{ opacity: 0.04, rotate: 180 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, delay: 0.3 }}
+            />
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-6xl mx-auto">
                 <ScrollAnimation>
@@ -398,7 +419,17 @@ const CultivatingProcessing = () => {
           </section>
 
           {/* Processing Section */}
-          <section className="py-16 md:py-24 bg-muted/20">
+          <section className="py-16 md:py-24 bg-muted/20 relative overflow-hidden">
+            {/* Subtle line art decorations */}
+            <motion.img 
+              src={cannabisLineart2} 
+              alt="" 
+              className="absolute top-1/4 -right-16 w-40 md:w-56 h-auto opacity-[0.03] pointer-events-none -rotate-12"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 0.03 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            />
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <ScrollAnimation>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 md:mb-6">Post-harvest excellence</h2>
@@ -466,7 +497,17 @@ const CultivatingProcessing = () => {
           </section>
 
           {/* Newsletter Section */}
-          <section className="py-16 md:py-24" style={{ backgroundColor: 'hsl(var(--section-color))' }}>
+          <section className="py-16 md:py-24 relative overflow-hidden" style={{ backgroundColor: 'hsl(var(--section-color))' }}>
+            {/* Subtle line art decoration */}
+            <motion.img 
+              src={cannabisLineart1} 
+              alt="" 
+              className="absolute top-8 right-8 w-32 md:w-44 h-auto opacity-[0.05] pointer-events-none rotate-12"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 0.05, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            />
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto">
                 <ScrollAnimation>
