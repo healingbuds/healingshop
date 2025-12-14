@@ -1,0 +1,368 @@
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { 
+  User, 
+  Package, 
+  ShoppingCart, 
+  CheckCircle2, 
+  Clock, 
+  AlertCircle,
+  Shield,
+  FileText,
+  ArrowRight,
+  Loader2,
+  ExternalLink
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { useShop } from '@/context/ShopContext';
+import { useOrderTracking } from '@/hooks/useOrderTracking';
+import { supabase } from '@/integrations/supabase/client';
+import { useState, useEffect } from 'react';
+import { User as SupabaseUser } from '@supabase/supabase-js';
+
+const PatientDashboard = () => {
+  const navigate = useNavigate();
+  const { drGreenClient, isEligible, isLoading: clientLoading, cart, cartTotal } = useShop();
+  const { orders, isLoading: ordersLoading } = useOrderTracking();
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [profile, setProfile] = useState<{ full_name: string | null } | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+
+      if (user) {
+        const { data } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .maybeSingle();
+        setProfile(data);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const getKYCProgress = () => {
+    if (!drGreenClient) return 0;
+    let progress = 25; // Registered
+    if (drGreenClient.kyc_link) progress = 50; // KYC started
+    if (drGreenClient.is_kyc_verified) progress = 75; // KYC verified
+    if (drGreenClient.admin_approval === 'VERIFIED') progress = 100; // Fully approved
+    return progress;
+  };
+
+  const getKYCStatus = () => {
+    if (!drGreenClient) {
+      return { status: 'Not Registered', variant: 'outline' as const, icon: AlertCircle };
+    }
+    if (drGreenClient.admin_approval === 'VERIFIED' && drGreenClient.is_kyc_verified) {
+      return { status: 'Verified Patient', variant: 'default' as const, icon: CheckCircle2 };
+    }
+    if (drGreenClient.is_kyc_verified) {
+      return { status: 'Awaiting Approval', variant: 'secondary' as const, icon: Clock };
+    }
+    if (drGreenClient.kyc_link) {
+      return { status: 'KYC Pending', variant: 'secondary' as const, icon: Clock };
+    }
+    return { status: 'Complete KYC', variant: 'destructive' as const, icon: AlertCircle };
+  };
+
+  const recentOrders = orders.slice(0, 3);
+  const pendingOrders = orders.filter(o => 
+    !['DELIVERED', 'COMPLETED', 'CANCELLED'].includes(o.status.toUpperCase())
+  ).length;
+
+  const kycStatus = getKYCStatus();
+  const KYCIcon = kycStatus.icon;
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="pt-32 pb-20">
+          <div className="container mx-auto px-4 text-center">
+            <Card className="max-w-md mx-auto bg-card/50 backdrop-blur-sm border-border/50">
+              <CardContent className="pt-12 pb-8">
+                <User className="w-16 h-16 mx-auto mb-6 text-muted-foreground" />
+                <h2 className="text-2xl font-bold text-foreground mb-4">Sign In Required</h2>
+                <p className="text-muted-foreground mb-6">
+                  Please sign in to access your patient dashboard.
+                </p>
+                <Button onClick={() => navigate('/auth')}>Sign In</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main className="pt-32 pb-20">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-6xl mx-auto"
+          >
+            {/* Welcome Section */}
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-2">
+                Welcome back{profile?.full_name ? `, ${profile.full_name}` : ''}
+              </h1>
+              <p className="text-muted-foreground">
+                Manage your medical cannabis prescriptions and orders
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-6">
+              {/* Left Column - Status Cards */}
+              <div className="lg:col-span-2 space-y-6">
+                {/* KYC Status Card */}
+                <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Shield className="h-5 w-5" />
+                      Verification Status
+                    </CardTitle>
+                    <CardDescription>
+                      Your medical eligibility and KYC verification progress
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-full ${
+                          isEligible ? 'bg-primary/20' : 'bg-yellow-500/20'
+                        }`}>
+                          <KYCIcon className={`h-5 w-5 ${
+                            isEligible ? 'text-primary' : 'text-yellow-600'
+                          }`} />
+                        </div>
+                        <div>
+                          <p className="font-medium text-foreground">{kycStatus.status}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {isEligible 
+                              ? 'You can purchase medical cannabis' 
+                              : 'Complete verification to shop'}
+                          </p>
+                        </div>
+                      </div>
+                      <Badge variant={kycStatus.variant}>{kycStatus.status}</Badge>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Verification Progress</span>
+                        <span className="font-medium">{getKYCProgress()}%</span>
+                      </div>
+                      <Progress value={getKYCProgress()} className="h-2" />
+                    </div>
+
+                    {!isEligible && (
+                      <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                        {!drGreenClient ? (
+                          <Button onClick={() => navigate('/shop/register')} className="flex-1">
+                            Complete Registration
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        ) : drGreenClient.kyc_link && !drGreenClient.is_kyc_verified ? (
+                          <Button asChild className="flex-1">
+                            <a href={drGreenClient.kyc_link} target="_blank" rel="noopener noreferrer">
+                              Complete KYC
+                              <ExternalLink className="ml-2 h-4 w-4" />
+                            </a>
+                          </Button>
+                        ) : (
+                          <Button variant="secondary" disabled className="flex-1">
+                            <Clock className="mr-2 h-4 w-4" />
+                            Awaiting Admin Approval
+                          </Button>
+                        )}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Recent Orders */}
+                <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        <Package className="h-5 w-5" />
+                        Recent Orders
+                      </CardTitle>
+                      <CardDescription>
+                        {pendingOrders > 0 
+                          ? `${pendingOrders} order(s) in progress` 
+                          : 'Your latest orders'}
+                      </CardDescription>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={() => navigate('/orders')}>
+                      View All
+                    </Button>
+                  </CardHeader>
+                  <CardContent>
+                    {ordersLoading ? (
+                      <div className="flex items-center justify-center py-8">
+                        <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                      </div>
+                    ) : recentOrders.length === 0 ? (
+                      <div className="text-center py-8">
+                        <Package className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
+                        <p className="text-muted-foreground">No orders yet</p>
+                        {isEligible && (
+                          <Button 
+                            variant="link" 
+                            className="mt-2"
+                            onClick={() => navigate('/shop')}
+                          >
+                            Browse Dispensary
+                          </Button>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {recentOrders.map((order) => (
+                          <div 
+                            key={order.id}
+                            className="flex items-center justify-between p-3 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors"
+                          >
+                            <div>
+                              <p className="font-mono text-sm text-primary">
+                                #{order.drgreen_order_id.slice(0, 8)}...
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                {new Date(order.created_at).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="font-medium">€{order.total_amount.toFixed(2)}</span>
+                              <Badge variant={
+                                order.status === 'DELIVERED' ? 'default' :
+                                order.status === 'CANCELLED' ? 'destructive' : 'secondary'
+                              }>
+                                {order.status}
+                              </Badge>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Right Column - Quick Actions & Cart */}
+              <div className="space-y-6">
+                {/* Quick Actions */}
+                <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Quick Actions</CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid gap-3">
+                    <Button 
+                      variant="outline" 
+                      className="w-full justify-start"
+                      onClick={() => navigate('/shop')}
+                    >
+                      <ShoppingCart className="mr-2 h-4 w-4" />
+                      Browse Dispensary
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="w-full justify-start"
+                      onClick={() => navigate('/orders')}
+                    >
+                      <Package className="mr-2 h-4 w-4" />
+                      Order History
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="w-full justify-start"
+                      onClick={() => navigate('/conditions')}
+                    >
+                      <FileText className="mr-2 h-4 w-4" />
+                      Medical Conditions
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Cart Summary */}
+                {cart.length > 0 && (
+                  <Card className="bg-primary/5 border-primary/20">
+                    <CardHeader>
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <ShoppingCart className="h-5 w-5" />
+                        Your Cart
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        {cart.slice(0, 3).map((item) => (
+                          <div key={item.id} className="flex justify-between text-sm">
+                            <span className="truncate">{item.strain_name}</span>
+                            <span className="text-muted-foreground">{item.quantity}g</span>
+                          </div>
+                        ))}
+                        {cart.length > 3 && (
+                          <p className="text-xs text-muted-foreground">
+                            +{cart.length - 3} more item(s)
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex justify-between font-medium border-t pt-3">
+                        <span>Total</span>
+                        <span className="text-primary">€{cartTotal.toFixed(2)}</span>
+                      </div>
+                      <Button 
+                        className="w-full" 
+                        onClick={() => navigate('/checkout')}
+                        disabled={!isEligible}
+                      >
+                        {isEligible ? 'Proceed to Checkout' : 'Complete Verification First'}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Account Info */}
+                <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Account</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Email</p>
+                      <p className="font-medium truncate">{user.email}</p>
+                    </div>
+                    {drGreenClient && (
+                      <div>
+                        <p className="text-sm text-muted-foreground">Country</p>
+                        <p className="font-medium">{drGreenClient.country_code}</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default PatientDashboard;

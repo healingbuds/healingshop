@@ -36,6 +36,7 @@ const Shop = lazy(() => import("./pages/Shop"));
 const ShopRegister = lazy(() => import("./pages/ShopRegister"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const Orders = lazy(() => import("./pages/Orders"));
+const PatientDashboard = lazy(() => import("./pages/PatientDashboard"));
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const AnimatedRoutes = () => {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/dashboard" element={<PatientDashboard />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/register" element={<ShopRegister />} />
           <Route path="/checkout" element={<Checkout />} />
