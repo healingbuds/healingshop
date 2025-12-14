@@ -145,6 +145,9 @@ const Checkout = () => {
                     <Button variant="outline" onClick={() => navigate('/shop')}>
                       Continue Shopping
                     </Button>
+                    <Button onClick={() => navigate('/orders')}>
+                      View Orders
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
