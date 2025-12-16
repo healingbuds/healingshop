@@ -84,9 +84,9 @@ export default function Shop() {
   return (
     <>
       <SEOHead
-        title={`${t('title')} | Dr. Green - Premium Strains`}
-        description="Browse our selection of pharmaceutical-grade medical cannabis strains. Lab-tested, doctor-approved products for qualified patients."
-        keywords="medical cannabis, CBD, THC, strains, pharmaceutical grade, Portugal, medical marijuana, dispensary"
+        title={`${t('title')} | Dr. Green - Premium Cultivars`}
+        description="Browse our selection of pharmaceutical-grade medical cannabis cultivars. Lab-tested, doctor-approved products for qualified patients."
+        keywords="medical cannabis, CBD, THC, cultivars, pharmaceutical grade, Portugal, medical marijuana, dispensary"
       />
 
       <div className="min-h-screen bg-background">
@@ -102,7 +102,7 @@ export default function Shop() {
               className="max-w-3xl mx-auto text-center"
             >
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4">
-                <span className="text-primary">Strains</span>
+                <span className="text-primary">Cultivars</span>
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 px-2">
                 {t('subtitle')}

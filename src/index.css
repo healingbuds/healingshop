@@ -132,33 +132,36 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 150 20% 8%;
+    /* Refined dark theme with better green contrast */
+    --background: 160 25% 6%;             /* Deep, rich dark with slight green tint */
     --foreground: 150 10% 95%;
 
-    --card: 150 18% 12%;
+    --card: 160 20% 10%;                  /* Slightly lighter cards */
     --card-foreground: 150 10% 95%;
 
-    --popover: 150 18% 12%;
+    --popover: 160 20% 10%;
     --popover-foreground: 150 10% 95%;
 
-    --primary: 155 60% 45%;
-    --primary-foreground: 0 0% 100%;
+    /* Primary green - vibrant but not overwhelming */
+    --primary: 152 55% 50%;               /* Fresh, balanced green */
+    --primary-foreground: 160 25% 6%;
 
-    --secondary: 45 80% 50%;
-    --secondary-foreground: 150 15% 15%;
+    /* Secondary - warm gold accent for contrast */
+    --secondary: 42 85% 55%;
+    --secondary-foreground: 160 25% 6%;
 
-    --muted: 150 15% 18%;
-    --muted-foreground: 150 10% 60%;
+    --muted: 160 15% 15%;
+    --muted-foreground: 150 10% 55%;
 
-    --accent: 155 40% 20%;
-    --accent-foreground: 155 60% 45%;
+    --accent: 152 40% 18%;
+    --accent-foreground: 152 55% 60%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 65% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 150 15% 20%;
-    --input: 150 15% 20%;
-    --ring: 155 60% 45%;
+    --border: 160 15% 18%;
+    --input: 160 15% 15%;
+    --ring: 152 55% 50%;
   }
 }
 

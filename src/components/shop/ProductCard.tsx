@@ -63,27 +63,27 @@ export function ProductCard({ product, onViewDetails, showDataSource = false }: 
     switch (category.toLowerCase()) {
       case 'sativa':
         return {
-          badge: 'bg-amber-500/20 text-amber-300 border-amber-400/30 backdrop-blur-sm',
-          glow: 'shadow-amber-500/20',
+          badge: 'bg-amber-500/25 text-amber-300 border-amber-400/40 backdrop-blur-sm',
+          glow: 'hover:shadow-amber-500/20',
         };
       case 'indica':
         return {
-          badge: 'bg-violet-500/20 text-violet-300 border-violet-400/30 backdrop-blur-sm',
-          glow: 'shadow-violet-500/20',
+          badge: 'bg-violet-500/25 text-violet-300 border-violet-400/40 backdrop-blur-sm',
+          glow: 'hover:shadow-violet-500/20',
         };
       case 'hybrid':
         return {
-          badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30 backdrop-blur-sm',
-          glow: 'shadow-emerald-500/20',
+          badge: 'bg-emerald-500/25 text-emerald-300 border-emerald-400/40 backdrop-blur-sm',
+          glow: 'hover:shadow-emerald-500/20',
         };
       case 'cbd':
         return {
-          badge: 'bg-sky-500/20 text-sky-300 border-sky-400/30 backdrop-blur-sm',
-          glow: 'shadow-sky-500/20',
+          badge: 'bg-cyan-500/25 text-cyan-300 border-cyan-400/40 backdrop-blur-sm',
+          glow: 'hover:shadow-cyan-500/20',
         };
       default:
         return {
-          badge: 'bg-muted/50 text-muted-foreground border-border/50',
+          badge: 'bg-slate-500/25 text-slate-300 border-slate-400/40',
           glow: '',
         };
     }
@@ -137,18 +137,23 @@ export function ProductCard({ product, onViewDetails, showDataSource = false }: 
       transition={{ duration: 0.3, ease: "easeOut" }}
       className="h-full"
     >
-      <div className={`group relative h-full overflow-hidden rounded-2xl bg-gradient-to-b from-card/80 to-card/40 backdrop-blur-xl border border-white/10 shadow-xl shadow-black/10 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 ${categoryStyles.glow}`}>
-        {/* Gradient overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/10 pointer-events-none" />
+      <div className={`group relative h-full overflow-hidden rounded-2xl bg-gradient-to-b from-card/90 to-card/60 backdrop-blur-xl border border-white/10 shadow-xl shadow-black/20 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 ${categoryStyles.glow}`}>
+        {/* Gradient overlay for premium depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/20 pointer-events-none" />
         
-        {/* Image container - fixed aspect ratio */}
-        <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-black/20 to-black/40 flex items-center justify-center">
+        {/* Image container - fixed aspect ratio with consistent shadow treatment */}
+        <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-slate-900/30 to-slate-900/60 flex items-center justify-center">
+          {/* Background glow effect for depth */}
+          <div className="absolute inset-0 bg-gradient-radial from-white/5 via-transparent to-transparent opacity-50" />
+          
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="w-[85%] h-[85%] object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-2 drop-shadow-[0_8px_24px_rgba(0,0,0,0.4)] filter"
+            className="w-[80%] h-[80%] object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
             loading="lazy"
-            style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))' }}
+            style={{ 
+              filter: 'drop-shadow(0 12px 28px rgba(0,0,0,0.5)) drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+            }}
           />
           
           {/* Subtle vignette */}
@@ -212,17 +217,17 @@ export function ProductCard({ product, onViewDetails, showDataSource = false }: 
             </div>
           </div>
 
-          {/* THC/CBD stats */}
+          {/* THC/CBD stats - improved styling */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
-              <Leaf className="h-3.5 w-3.5 text-primary" />
-              <span className="text-sm font-semibold text-primary">{product.thcContent}%</span>
-              <span className="text-[10px] text-primary/70 uppercase">THC</span>
+            <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/25">
+              <Leaf className="h-3.5 w-3.5 text-emerald-400" />
+              <span className="text-sm font-bold text-emerald-400">{product.thcContent.toFixed(1)}%</span>
+              <span className="text-[10px] text-emerald-400/70 uppercase font-medium">THC</span>
             </div>
-            <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-sky-500/10 border border-sky-500/20">
-              <Droplets className="h-3.5 w-3.5 text-sky-400" />
-              <span className="text-sm font-semibold text-sky-400">{product.cbdContent}%</span>
-              <span className="text-[10px] text-sky-400/70 uppercase">CBD</span>
+            <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-cyan-500/15 border border-cyan-500/25">
+              <Droplets className="h-3.5 w-3.5 text-cyan-400" />
+              <span className="text-sm font-bold text-cyan-400">{product.cbdContent.toFixed(1)}%</span>
+              <span className="text-[10px] text-cyan-400/70 uppercase font-medium">CBD</span>
             </div>
           </div>
 

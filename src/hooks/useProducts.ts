@@ -239,9 +239,10 @@ export function useProducts(countryCode: string = 'PT') {
             id: strain.id || strain._id,
             name: strain.name,
             description: strain.description || '',
-            thcContent: strain.thcContent || strain.thc || 0,
-            cbdContent: strain.cbdContent || strain.cbd || 0,
-            retailPrice: strain.retailPrice || strain.price || 0,
+            // Ensure proper number parsing - API returns thc/cbd as numbers, not thcContent
+            thcContent: parseFloat(strain.thc) || parseFloat(strain.thcContent) || 0,
+            cbdContent: parseFloat(strain.cbd) || parseFloat(strain.cbdContent) || 0,
+            retailPrice: parseFloat(strain.retailPrice) || parseFloat(strain.price) || 0,
             availability: isAvailable,
             stock: stock,
             imageUrl,
